@@ -1,6 +1,7 @@
 using backend.Data;
 using Microsoft.AspNetCore.Mvc;
 using backend.Models;
+using backend.mappers;
 namespace backend.Controllers;
 
 [Route("v1/users")]
@@ -15,7 +16,8 @@ public class UserController : ControllerBase
     [HttpGet]
     public ActionResult<List<User>> GetAllUsers()
     {
-        var users= _context.Users.ToList();
+        var users= _context.Users.ToList()
+        .Select(u=>u.ToUserDto());
 
         return Ok(users);
     }
@@ -29,7 +31,7 @@ public class UserController : ControllerBase
         {
             return NotFound();
         }
-        return Ok(user);
+        return Ok(user.ToUserDto());
     }
 
 }
