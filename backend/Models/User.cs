@@ -12,10 +12,9 @@ namespace backend.Models
         public string LastName {get; set;}= string.Empty;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreatedOn { get; set;}= DateTime.Now;
+        public DateTimeOffset CreatedOn { get; set;}= DateTimeOffset.Now;
         [Required]
-        [DataType(DataType.Date)]
-        public DateTime? DateOfBirth{ get; set;}
+        public DateOnly DateOfBirth{ get; set;}
         [Required]
         public string? Gender { get; set;}
         [Required]

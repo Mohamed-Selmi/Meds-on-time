@@ -14,9 +14,21 @@ namespace backend.mappers
                 Id=userModel.Id,
                 FirstName=userModel.FirstName,
                 LastName=userModel.LastName,
-                Age=userModel.Age,
+                DateOfBirth=userModel.DateOfBirth,
                 Email=userModel.Email,
                 Gender=userModel.Gender
+            };
+        }
+        public static User ToUserFromCreateDTO(this CreateUserRequestDto userDto)
+        {
+            return new User
+            {
+                FirstName=userDto.FirstName,
+                LastName=userDto.LastName,
+                DateOfBirth=userDto.DateOfBirth,
+                Password=userDto.Password,
+                Email=userDto.Email,
+                Gender=userDto.Gender,
             };
         }
     }   
