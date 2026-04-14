@@ -42,6 +42,34 @@ public class UserController : ControllerBase
         _context.SaveChanges();
         return CreatedAtAction(nameof(GetUserById),new {id=userModel.Id}, userModel.ToUserDto());
     }
+   /* [HttpPut]
+    [Route("id")]
+    public IActionResult UpdateUser([FromRoute] int id, [FromBody] UpdateUserRequestDto updateUserDto)
+    {
+        var userModel=_context.Users.FirstOrDefault(x=> x.Id ==id);
+        if (userModel == null)
+        {
+            return NotFound();
+        }
+        
+    }*/
 
+    [HttpDelete]
+    [Route("{id}")]
+    public IActionResult DeleteUser([FromRoute] int id)
+    {
+        var userModel= _context.Users.FirstOrDefault(x=> x.Id==id);
+
+        if (userModel == null)
+        {
+            return NotFound();
+        }
+        _context.Users.Remove(userModel);
+
+        _context.SaveChanges();
+
+        return NoContent();
+
+    }
 
 }
