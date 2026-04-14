@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Models;
 using backend.mappers;
 using backend.Dtos.user;
+using Microsoft.EntityFrameworkCore;
 namespace backend.Controllers;
 
 [Route("v1/users")]
@@ -15,18 +16,19 @@ public class UserController : ControllerBase
         _context=context;
     }
     [HttpGet]
-    public ActionResult<List<User>> GetAllUsers()
+    public async Task<IActionResult> GetAllUsers()
     {
-        var users= _context.Users.ToList()
-        .Select(u=>u.ToUserDto());
+        var users= await  _context.Users.ToListAsync();
+
+        var userDto= users.Select(u=>u.ToUserDto());
 
         return Ok(users);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<User> GetUserById([FromRoute] int id)
+    public async Task<ActionResult<User>> GetUserById([FromRoute] int id)
     {
-        var user= _context.Users.Find(id);
+        var user= await _context.Users.FindAsync(id);
 
         if (user == null)
         {
@@ -35,18 +37,18 @@ public class UserController : ControllerBase
         return Ok(user.ToUserDto());
     }
     [HttpPost]
-    public IActionResult CreateUser([FromBody] CreateUserRequestDto userDto)
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserRequestDto userDto)
     {
         var userModel=userDto.ToUserFromCreateDTO();
-        _context.Users.Add(userModel);
-        _context.SaveChanges();
+        await _context.Users.AddAsync(userModel);
+        await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetUserById),new {id=userModel.Id}, userModel.ToUserDto());
     }
    /* [HttpPut]
     [Route("id")]
-    public IActionResult UpdateUser([FromRoute] int id, [FromBody] UpdateUserRequestDto updateUserDto)
+    public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] UpdateUserRequestDto updateUserDto)
     {
-        var userModel=_context.Users.FirstOrDefault(x=> x.Id ==id);
+        var userModel= await _context.Users.FirstOrDefaultAsync(x=> x.Id ==id);
         if (userModel == null)
         {
             return NotFound();
@@ -56,9 +58,9 @@ public class UserController : ControllerBase
 
     [HttpDelete]
     [Route("{id}")]
-    public IActionResult DeleteUser([FromRoute] int id)
+    public async  Task<IActionResult> DeleteUser([FromRoute] int id)
     {
-        var userModel= _context.Users.FirstOrDefault(x=> x.Id==id);
+        var userModel= await _context.Users.FirstOrDefaultAsync(x=> x.Id==id);
 
         if (userModel == null)
         {
@@ -66,7 +68,7 @@ public class UserController : ControllerBase
         }
         _context.Users.Remove(userModel);
 
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         return NoContent();
 
