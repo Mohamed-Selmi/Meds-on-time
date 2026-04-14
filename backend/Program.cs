@@ -1,4 +1,6 @@
 using backend.Data;
+using backend.Interfaces.UserInterfaces;
+using backend.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,7 @@ builder.Services.AddDbContextPool<ApplicationDBContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+builder.Services.AddScoped<IuserRepository, UserRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,0 +1,66 @@
+
+
+
+using backend.Data;
+using backend.Dtos.user;
+using backend.Interfaces.UserInterfaces;
+using backend.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace backend.Repository
+{
+    public class UserRepository : IuserRepository
+    {   
+        private readonly ApplicationDBContext _context;
+        public UserRepository(ApplicationDBContext context)
+        {
+            _context= context;
+        }
+
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+        public async Task<User?> GetUserByIdAsync(int id)
+        {
+           return await _context.Users.FindAsync(id);
+
+        }
+
+        public async Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto updateUserDto)
+        {
+           var userExists= await _context.Users.FirstOrDefaultAsync(x=> x.Id==id);
+           //We use FirstOrDefault because it returns null if not found
+           if (userExists == null)
+            {
+                return null;
+            }
+            userExists.FirstName=updateUserDto.FirstName;
+            userExists.LastName=updateUserDto.LastName;
+            userExists.DateOfBirth=updateUserDto.DateOfBirth;
+            userExists.Email=updateUserDto.Email;
+            userExists.Gender=updateUserDto.Gender;
+            userExists.Password=updateUserDto.Password;
+            await _context.SaveChangesAsync();
+            return userExists;
+        }
+          public async Task<User> CreateUserAsync(User userModel)
+        {
+            await _context.Users.AddAsync(userModel);
+            await _context.SaveChangesAsync();
+            return userModel;
+        }
+
+        public async Task<User?> DeleteUserAsync(int id)
+        {
+            var userModel= await _context.Users.FirstOrDefaultAsync(x=> x.Id==id);
+            if (userModel == null)
+            {
+                return null;
+            }
+            _context.Users.Remove(userModel);
+            await _context.SaveChangesAsync();
+            return userModel;
+        }
+    }
+}
