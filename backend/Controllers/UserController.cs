@@ -26,7 +26,7 @@ public class UserController : ControllerBase
 
         var userDto= users.Select(u=>u.ToUserDto());
 
-        return Ok(users);
+        return Ok(userDto);
     }
 
     [HttpGet("{id}")]
