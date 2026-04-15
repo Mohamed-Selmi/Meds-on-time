@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Interfaces.MedicationInterfaces;
 using backend.Interfaces.UserInterfaces;
 using backend.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,8 @@ builder.Services.AddDbContextPool<ApplicationDBContext>(options =>
 
 
 builder.Services.AddScoped<IuserRepository, UserRepository>();
+builder.Services.AddScoped<IMedicationRepository, MedicationRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

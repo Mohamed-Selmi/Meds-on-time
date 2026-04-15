@@ -1,8 +1,6 @@
 namespace backend.Dtos.Medication
 {
-    public class MedicationDto{
-
-        public int Id {get; set;}
+    public class CreateMedicationRequestDto{
 
         public string Name {get; set;}= string.Empty;
         public string? Description {get; set;}

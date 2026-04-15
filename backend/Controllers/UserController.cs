@@ -6,7 +6,7 @@ using backend.Dtos.user;
 using Microsoft.EntityFrameworkCore;
 using backend.Interfaces.UserInterfaces;
 using backend.Repository;
-namespace backend.Controllers;
+namespace backend.Controllers{
 
 [Route("v1/users")]
 [ApiController]
@@ -74,4 +74,5 @@ public class UserController : ControllerBase
 
     }
 
+}
 }
