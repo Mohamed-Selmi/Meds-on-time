@@ -13,7 +13,7 @@ import { User } from '../shared/models/user';
   providers:[UserService]
 })
 export class UserListComponent implements OnInit{
-  usersData !: any; 
+  usersData : any; 
   
   
   constructor(private userService: UserService){}
@@ -21,9 +21,12 @@ export class UserListComponent implements OnInit{
     this.userService.getAllUsers().subscribe(
       res=>{
         this.usersData=res;
-        console.log(res);
       }
     )
+  }
+  deleteUser(user: User){
+    this.userService.deleteUser(user);
+    this.getAllUsers();
   }
   ngOnInit(): void {
     this.getAllUsers();

@@ -1,26 +1,23 @@
-<p>user-list works!</p>
 <table>
     <thead>
         <th>Id</th>
         <th> FirstName</th>
         <th> LastName</th>
         <th> Email</th>
-        <th> Password</th>
         <th> DateOfBirth</th>
         <th> Gender</th>
     </thead>
     <tbody>
-        <tr *ngFor="let row of usersData">
-        <th>{{row.Id}}</th>
-        <td> {{row.FirstName}}</td>
-        <td> {{row.LastName}}</td>
-        <td> {{row.Email}}</td>
-        <td> {{row.Password}}</td>
-        <td> {{row.DateOfBirth}}</td>
-        <td> {{row.Gender}}</td>
+        <tr *ngFor="let user of usersData ">
+        <th>{{user.id}}</th>
+        <td> {{user.firstName}}</td>
+        <td> {{user.lastName}}</td>
+        <td> {{user.email}}</td>
+        <td> {{user.dateOfBirth}}</td>
+        <td> {{user.gender}}</td>
         <td>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button> Edit</button>
+            <button (click)="deleteUser(user)">Delete</button>
         </td>
         </tr>
     </tbody>

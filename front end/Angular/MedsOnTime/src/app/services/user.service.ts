@@ -1,14 +1,20 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
+import { User } from '../shared/models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
+  private apiUrl="http://localhost:5275/v1/";
   constructor(private http: HttpClient) { }
   getAllUsers(){
-    return this.http.get<any>("http://localhost:5275/v1/users").pipe(map(res=> <any>res));
+    const headers= new HttpHeaders().set('Access-Control-Allow-Origin','*');
+    return this.http.get<any>(`${this.apiUrl}users`,{headers}
+    ).pipe(map(res=> <any>res));
   }
+  deleteUser(user: User){
+    return this.http.delete(`${this.apiUrl}users/${user.id}`)
+  };
 }

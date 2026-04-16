@@ -3,12 +3,23 @@ using backend.Interfaces.MedicationInterfaces;
 using backend.Interfaces.UserInterfaces;
 using backend.Repository;
 using Microsoft.EntityFrameworkCore;
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Enabling cors for Angular front end
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy  =>
+                      {
+                          policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                      });
+});
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
@@ -29,7 +40,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
+app.UseRouting();
+app.UseCors(MyAllowSpecificOrigins);
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
