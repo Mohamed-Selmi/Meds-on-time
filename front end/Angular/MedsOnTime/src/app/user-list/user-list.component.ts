@@ -17,16 +17,19 @@ export class UserListComponent implements OnInit{
   
   
   constructor(private userService: UserService){}
-  getAllUsers(){
-    this.userService.getAllUsers().subscribe(
+  async getAllUsers(){
+   await this.userService.getAllUsers().subscribe(
       res=>{
         this.usersData=res;
       }
     )
   }
-  deleteUser(user: User){
-    this.userService.deleteUser(user);
-    this.getAllUsers();
+  async deleteUser(user: User){
+    await this.userService.deleteUser(user).subscribe();
+    await this.getAllUsers();
+  }
+  async addUser(user: User){
+    
   }
   ngOnInit(): void {
     this.getAllUsers();

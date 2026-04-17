@@ -1,3 +1,4 @@
+<div class="tableDiv">
 <table>
     <thead>
         <th>Id</th>
@@ -16,9 +17,10 @@
         <td> {{user.dateOfBirth}}</td>
         <td> {{user.gender}}</td>
         <td>
-            <button> Edit</button>
-            <button (click)="deleteUser(user)">Delete</button>
+            <button id="deleteButton"> Edit</button>
+            <button id="updateButton" (click)="deleteUser(user)">Delete</button>
         </td>
         </tr>
     </tbody>
 </table>
+</div>

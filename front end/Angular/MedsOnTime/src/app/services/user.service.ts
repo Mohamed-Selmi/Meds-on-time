@@ -15,6 +15,10 @@ export class UserService {
     ).pipe(map(res=> <any>res));
   }
   deleteUser(user: User){
-    return this.http.delete(`${this.apiUrl}users/${user.id}`)
+        const headers= new HttpHeaders().set('Access-Control-Allow-Origin','*');
+    return this.http.delete(`${this.apiUrl}users/${user.id}`,{'observe': 'body',headers})
   };
+  addUser(user: User){
+    return this.http.post(`${this.apiUrl}users`,user)
+  }
 }
