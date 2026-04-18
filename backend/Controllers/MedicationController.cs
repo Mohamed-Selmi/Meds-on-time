@@ -4,6 +4,7 @@ using backend.Dtos.Medication;
 using backend.Interfaces.MedicationInterfaces;
 using backend.mappers;
 using backend.Models;
+using backend.Services.MedicationService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers{
@@ -12,19 +13,19 @@ namespace backend.Controllers{
 [ApiController]
     public class MedicationController : ControllerBase
     {
-          private readonly ApplicationDBContext _context;
-        private readonly IMedicationRepository _medicationRepository;
-        public MedicationController(ApplicationDBContext context,IMedicationRepository medicationRepository)
+       
+        private readonly IMedicationService _medicationService;
+        public MedicationController(IMedicationService medicationService)
         {
-          _context=context;
-          _medicationRepository=medicationRepository;
+          
+          _medicationService=medicationService;
         }
          
     
         [HttpGet]
         public async Task<IActionResult> GetAllMedications()
             {
-                var medications= await _medicationRepository.GetAllMedicationsAsync();
+                var medications= await _medicationService.GetAllMedications();
                 var medicationDto=medications.Select(m=>m.ToMedicationDto());
 
                 return Ok(medications);
@@ -32,7 +33,7 @@ namespace backend.Controllers{
         [HttpGet("{id}")]
         public async Task<ActionResult<Medication>> GetMedicationById(int id)
         {
-            var medication= await _medicationRepository.GetMedicationByIdAsync(id);
+            var medication= await _medicationService.GetMedicationById(id);
             if (medication == null)
             {
                 return NotFound();
@@ -43,7 +44,7 @@ namespace backend.Controllers{
         public async Task<IActionResult> CreateMedication([FromBody] CreateMedicationRequestDto medicationDto)
         {
             var medicationModel= medicationDto.ToMedicationFromCreateDto();
-            await _medicationRepository.CreateMedicationAsync(medicationModel);
+            await _medicationService.CreateMedication(medicationModel);
             return CreatedAtAction(nameof(GetMedicationById),new {id=medicationModel.Id},medicationModel.ToMedicationDto());
         }
 
@@ -51,7 +52,7 @@ namespace backend.Controllers{
         [Route("id")]
         public async Task<IActionResult> UpdateMedication([FromRoute] int id, [FromBody] CreateMedicationRequestDto UpdateMedicationDto)
         {
-            var medicationModel= await _medicationRepository.UpdateMedicationAsync(id,UpdateMedicationDto);
+            var medicationModel= await _medicationService.UpdateMedication(id,UpdateMedicationDto);
             if (medicationModel == null)
                 {
                     return NotFound();
@@ -64,7 +65,7 @@ namespace backend.Controllers{
 
         public async Task<IActionResult> DeleteMedication([FromRoute] int id)
         {
-            var medicationModel=await _medicationRepository.DeleteMedicationAsync(id);
+            var medicationModel=await _medicationService.DeleteMedication(id);
             if (medicationModel == null)
                     {
                         return NotFound();

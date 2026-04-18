@@ -7,7 +7,7 @@ namespace backend.Services.UserService
 {
     public class UserService : IUserService
     {
-         private readonly IuserRepository _userRepository;
+        private readonly IuserRepository _userRepository;
         private readonly ApplicationDBContext _context;
 
          public UserService(ApplicationDBContext context, IuserRepository userRepository)
