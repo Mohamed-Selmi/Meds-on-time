@@ -6,23 +6,25 @@ using backend.Dtos.user;
 using Microsoft.EntityFrameworkCore;
 using backend.Interfaces.UserInterfaces;
 using backend.Repository;
+using backend.Services.UserService;
 namespace backend.Controllers{
 
 [Route("v1/users")]
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly ApplicationDBContext _context;
-    private readonly IuserRepository _userRepository;
-    public UserController(ApplicationDBContext context, IuserRepository userRepository)
+   
+
+    private readonly IUserService _userService;
+    
+    public UserController(IUserService userService)
     {
-        _context=context;
-        _userRepository= userRepository;
+        _userService=userService;
     }
     [HttpGet]
     public async Task<IActionResult> GetAllUsers()
     {
-        var users= await _userRepository.GetAllUsersAsync();
+        var users= await _userService.GetAllUsers();
 
         var userDto= users.Select(u=>u.ToUserDto());
 
@@ -32,7 +34,7 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetUserById([FromRoute] int id)
     {
-        var user= await _userRepository.GetUserByIdAsync(id);
+        var user= await _userService.GetUserById(id);
 
         if (user == null)
         {
@@ -44,14 +46,14 @@ public class UserController : ControllerBase
     public async Task<IActionResult> CreateUser([FromBody] CreateUserRequestDto userDto)
     {
         var userModel=userDto.ToUserFromCreateDTO();
-        await _userRepository.CreateUserAsync(userModel);
+        await _userService.CreateUser(userModel);
         return CreatedAtAction(nameof(GetUserById),new {id=userModel.Id}, userModel.ToUserDto());
     }
     [HttpPut]
     [Route("id")]
     public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] UpdateUserRequestDto updateUserDto)
     {
-        var userModel= await _userRepository.UpdateUserAsync(id,updateUserDto);
+        var userModel= await _userService.UpdateUser(id,updateUserDto);
         if (userModel == null)
         {
             return NotFound();
@@ -63,7 +65,7 @@ public class UserController : ControllerBase
     [Route("{id}")]
     public async Task<IActionResult> DeleteUser([FromRoute] int id)
     {
-        var userModel= await _userRepository.DeleteUserAsync(id);
+        var userModel= await _userService.DeleteUser(id);
 
         if (userModel == null)
         {

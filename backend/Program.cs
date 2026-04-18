@@ -2,6 +2,7 @@ using backend.Data;
 using backend.Interfaces.MedicationInterfaces;
 using backend.Interfaces.UserInterfaces;
 using backend.Repository;
+using backend.Services.UserService;
 using Microsoft.EntityFrameworkCore;
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -30,7 +31,7 @@ builder.Services.AddDbContextPool<ApplicationDBContext>(options =>
 
 builder.Services.AddScoped<IuserRepository, UserRepository>();
 builder.Services.AddScoped<IMedicationRepository, MedicationRepository>();
-
+builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
