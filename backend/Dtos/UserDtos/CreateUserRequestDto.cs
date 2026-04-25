@@ -1,4 +1,4 @@
-namespace backend.Dtos.user
+namespace backend.Dtos.userDtos
 {
     public class CreateUserRequestDto
     {

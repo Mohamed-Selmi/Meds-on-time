@@ -1,14 +1,14 @@
 
 
-namespace backend.Dtos.user
+namespace backend.Dtos.userDtos
 {
-    
-    public class UserDto
+    public class UpdateUserRequestDto
     {
-        public int Id { get; set;}
         public string FirstName { get; set;} = string.Empty;
 
         public string LastName {get; set;}= string.Empty; 
+
+        public string Password {get; set;} = string.Empty;
 
         public DateOnly DateOfBirth{ get; set;}
 
@@ -16,4 +16,5 @@ namespace backend.Dtos.user
 
         public string? Gender { get; set;}
     }
+
 }

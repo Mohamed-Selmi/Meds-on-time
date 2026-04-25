@@ -3,6 +3,7 @@ using backend.Models;
 using backend.Interfaces.UserInterfaces;
 using backend.Data;
 using backend.mappers;
+using Microsoft.EntityFrameworkCore;
 namespace backend.Services.UserService
 {
     public class UserService : IUserService
@@ -24,7 +25,12 @@ namespace backend.Services.UserService
 
         public async Task<User?> DeleteUser(int id)
         {
-            return await _userRepository.DeleteUserAsync(id);
+            var userModel= await _context.Users.FirstOrDefaultAsync(x=> x.Id==id);
+            if (userModel == null)
+            {
+                return null;
+            }
+            return await _userRepository.DeleteUserAsync(userModel);
         }
 
         public async Task<List<User>> GetAllUsers()

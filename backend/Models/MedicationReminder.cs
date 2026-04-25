@@ -4,10 +4,11 @@ namespace backend.Models
 {
     public class MedicationReminder
     {
-        private int Id{get; set;}
+        [Key]
+        public int Id {get; set;}
 
-        private MedicationSchedule medicationSchedule{get; set;}=new MedicationSchedule();
+        public MedicationSchedule medicationSchedule {get; set;}=new MedicationSchedule();
 
-        private TimeOnly reminderHour{get;set;}    
+        public TimeOnly reminderHour{get;set;}    
     }
 }

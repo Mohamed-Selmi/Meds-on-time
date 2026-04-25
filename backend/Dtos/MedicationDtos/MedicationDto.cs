@@ -1,4 +1,4 @@
-namespace backend.Dtos.Medication
+namespace backend.Dtos.MedicationDtos
 {
     public class MedicationDto{
 

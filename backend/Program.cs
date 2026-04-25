@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Interfaces;
 using backend.Interfaces.MedicationInterfaces;
 using backend.Interfaces.UserInterfaces;
 using backend.Repository;
@@ -34,7 +35,7 @@ builder.Services.AddScoped<IuserRepository, UserRepository>();
 builder.Services.AddScoped<IMedicationRepository, MedicationRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMedicationService, MedicationService>();
-
+builder.Services.AddScoped<IMedicationScheduleRepository,MedicationScheduleRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

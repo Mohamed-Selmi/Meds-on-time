@@ -13,6 +13,6 @@ namespace backend.Interfaces.UserInterfaces
 
         Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto userDto);
 
-        Task<User?> DeleteUserAsync(int id);
+        Task<User?> DeleteUserAsync(User userModel);
     }
 }

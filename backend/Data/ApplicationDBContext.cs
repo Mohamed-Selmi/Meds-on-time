@@ -19,5 +19,10 @@ namespace backend.Data
 }
         public DbSet<User> Users{ get; set;}
         public DbSet<Medication> Medications{ get; set;} 
+
+        public DbSet<MedicationSchedule> MedicationSchedules{get; set;}
+        public DbSet<MedicationReminder> MedicationReminders{get; set;}
+
+        public DbSet<ReminderPlanning> ReminderPlannings{get; set;}
     }
 }

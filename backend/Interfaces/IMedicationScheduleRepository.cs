@@ -5,8 +5,14 @@ namespace backend.Interfaces
 {
     public interface IMedicationScheduleRepository
     {
-        Task<List<MedicationSchedule>> getAllSchedulesAsync();
+        Task<List<MedicationSchedule>> GetAllSchedulesAsync();
         Task<MedicationSchedule> GetMedicationScheduleAsync(int id);
+
+        Task<MedicationSchedule> CreateMedicationScheduleAsync(MedicationSchedule medicationScheduleModel);
+
+        Task<MedicationSchedule> UpdateMedicationScheduleAsync(int id,MedicationSchedule medicationScheduleModel);
+
+        Task<MedicationSchedule?> DeleteMedicationScheduleAsync(int id); 
 
         Task<List<MedicationSchedule>> GetAllUserMedicationSchedulesAsync(User User);
 

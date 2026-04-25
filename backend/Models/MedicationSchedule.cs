@@ -13,19 +13,19 @@ namespace backend.Models
         [Key]
         public int Id{get; set;}
 
-        public User user{get; set;}=null!;
+        public User User{get; set;}=null!;
 
-        public Medication medication{get; set;}=null!;
+        public Medication Medication{get; set;}=null!;
 
-        public int numberOfPills{get; set;}
+        public int NumberOfPills{get; set;}
 
-        public int duration{get; set;}
+        public int Duration{get; set;}
 
-        public DateOnly startDate{get; set;}
+        public DateOnly? StartDate{get; set;}
 
-        private DateOnly endDate{get; set;}
+        public DateOnly? EndDate{get; set;}
 
-        public List<ReminderPlanning> reminderPlannings{get; set;}=new List<ReminderPlanning>();
+        public List<ReminderPlanning> ReminderPlannings{get; set;}=new List<ReminderPlanning>();
 
 
 

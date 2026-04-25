@@ -51,13 +51,8 @@ namespace backend.Repository
             return userModel;
         }
 
-        public async Task<User?> DeleteUserAsync(int id)
+        public async Task<User?> DeleteUserAsync(User userModel)
         {
-            var userModel= await _context.Users.FirstOrDefaultAsync(x=> x.Id==id);
-            if (userModel == null)
-            {
-                return null;
-            }
             _context.Users.Remove(userModel);
             await _context.SaveChangesAsync();
             return userModel;
