@@ -121,3 +121,6 @@ C:\Users\mayss\Desktop\Second year\Second trimester\Meds on time\backend\obj\Deb
 C:\Users\mayss\Desktop\Second year\Second trimester\Meds on time\backend\obj\Debug\net10.0\backend.pdb
 C:\Users\mayss\Desktop\Second year\Second trimester\Meds on time\backend\obj\Debug\net10.0\backend.genruntimeconfig.cache
 C:\Users\mayss\Desktop\Second year\Second trimester\Meds on time\backend\obj\Debug\net10.0\ref\backend.dll
+C:\Users\mayss\Desktop\Second year\Second trimester\Meds on time\backend\bin\Debug\net10.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\mayss\Desktop\Second year\Second trimester\Meds on time\backend\bin\Debug\net10.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\mayss\Desktop\Second year\Second trimester\Meds on time\backend\bin\Debug\net10.0\Newtonsoft.Json.Bson.dll

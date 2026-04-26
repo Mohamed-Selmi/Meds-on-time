@@ -1,6 +1,6 @@
 
 
-using backend.Dtos.Medication;
+using backend.Dtos.MedicationDtos;
 using backend.Models;
 
 namespace backend.Services.MedicationService

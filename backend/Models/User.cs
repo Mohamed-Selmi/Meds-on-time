@@ -1,6 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using backend.Dtos.MedicationScheduleDtos;
 
 namespace backend.Models
 {
@@ -24,7 +25,7 @@ namespace backend.Models
 
         public int Age {get; set;}
 
-        
+        public List<MedicationSchedule> medicationSchedules{get;set;}=new List<MedicationSchedule>();
         
     }
 }

@@ -7,8 +7,9 @@ namespace backend.Models
         [Key]
         public int Id {get; set;}
 
-        public MedicationSchedule medicationSchedule {get; set;}=new MedicationSchedule();
+        public int? ReminderPlanningId{get;set;}
+        public ReminderPlanning?  ReminderPlanning{get; set;}
 
-        public TimeOnly reminderHour{get;set;}    
+        public TimeOnly ReminderHour{get;set;}    
     }
 }

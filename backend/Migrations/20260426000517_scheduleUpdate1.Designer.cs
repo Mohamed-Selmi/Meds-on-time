@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Data;
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260426000517_scheduleUpdate1")]
+    partial class scheduleUpdate1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,15 +60,20 @@ namespace backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<TimeOnly>("ReminderHour")
-                        .HasColumnType("time without time zone");
-
                     b.Property<int?>("ReminderPlanningId")
                         .HasColumnType("integer");
+
+                    b.Property<int>("medicationScheduleId")
+                        .HasColumnType("integer");
+
+                    b.Property<TimeOnly>("reminderHour")
+                        .HasColumnType("time without time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReminderPlanningId");
+
+                    b.HasIndex("medicationScheduleId");
 
                     b.ToTable("MedicationReminders");
                 });
@@ -84,7 +92,7 @@ namespace backend.Migrations
                     b.Property<DateOnly?>("EndDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("MedicationId")
+                    b.Property<int>("MedicationId")
                         .HasColumnType("integer");
 
                     b.Property<int>("NumberOfPills")
@@ -93,7 +101,7 @@ namespace backend.Migrations
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -113,18 +121,18 @@ namespace backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("MedicationScheduleId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("dayOfWeek")
                         .HasColumnType("text");
+
+                    b.Property<int>("medicationScheduleId")
+                        .HasColumnType("integer");
 
                     b.Property<DateOnly>("reminderDay")
                         .HasColumnType("date");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MedicationScheduleId");
+                    b.HasIndex("medicationScheduleId");
 
                     b.ToTable("ReminderPlannings");
                 });
@@ -174,22 +182,32 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.MedicationReminder", b =>
                 {
-                    b.HasOne("backend.Models.ReminderPlanning", "ReminderPlanning")
+                    b.HasOne("backend.Models.ReminderPlanning", null)
                         .WithMany("medicationReminders")
                         .HasForeignKey("ReminderPlanningId");
 
-                    b.Navigation("ReminderPlanning");
+                    b.HasOne("backend.Models.MedicationSchedule", "medicationSchedule")
+                        .WithMany()
+                        .HasForeignKey("medicationScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("medicationSchedule");
                 });
 
             modelBuilder.Entity("backend.Models.MedicationSchedule", b =>
                 {
                     b.HasOne("backend.Models.Medication", "Medication")
                         .WithMany()
-                        .HasForeignKey("MedicationId");
+                        .HasForeignKey("MedicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("backend.Models.User", "User")
-                        .WithMany("medicationSchedules")
-                        .HasForeignKey("UserId");
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Medication");
 
@@ -198,11 +216,13 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.ReminderPlanning", b =>
                 {
-                    b.HasOne("backend.Models.MedicationSchedule", "MedicationSchedule")
+                    b.HasOne("backend.Models.MedicationSchedule", "medicationSchedule")
                         .WithMany("ReminderPlannings")
-                        .HasForeignKey("MedicationScheduleId");
+                        .HasForeignKey("medicationScheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("MedicationSchedule");
+                    b.Navigation("medicationSchedule");
                 });
 
             modelBuilder.Entity("backend.Models.MedicationSchedule", b =>
@@ -213,11 +233,6 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.ReminderPlanning", b =>
                 {
                     b.Navigation("medicationReminders");
-                });
-
-            modelBuilder.Entity("backend.Models.User", b =>
-                {
-                    b.Navigation("medicationSchedules");
                 });
 #pragma warning restore 612, 618
         }

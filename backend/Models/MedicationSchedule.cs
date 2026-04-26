@@ -13,7 +13,9 @@ namespace backend.Models
         [Key]
         public int Id{get; set;}
 
+        public int? UserId{get;set;}
         public User User{get; set;}=null!;
+        public int? MedicationId{get; set;}
 
         public Medication Medication{get; set;}=null!;
 
@@ -21,13 +23,13 @@ namespace backend.Models
 
         public int Duration{get; set;}
 
-        public DateOnly? StartDate{get; set;}
+        public DateOnly StartDate{get; set;}
 
         public DateOnly? EndDate{get; set;}
 
         public List<ReminderPlanning> ReminderPlannings{get; set;}=new List<ReminderPlanning>();
 
-
+       
 
 
 

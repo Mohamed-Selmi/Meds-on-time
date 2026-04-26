@@ -1,4 +1,4 @@
-using backend.Dtos.user;
+using backend.Dtos.userDtos;
 using backend.Models;
 using backend.Interfaces.UserInterfaces;
 using backend.Data;

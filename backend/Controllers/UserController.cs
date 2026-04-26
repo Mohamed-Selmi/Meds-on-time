@@ -2,7 +2,7 @@ using backend.Data;
 using Microsoft.AspNetCore.Mvc;
 using backend.Models;
 using backend.mappers;
-using backend.Dtos.user;
+using backend.Dtos.userDtos;
 using Microsoft.EntityFrameworkCore;
 using backend.Interfaces.UserInterfaces;
 using backend.Repository;

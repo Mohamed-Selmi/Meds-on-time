@@ -4,6 +4,7 @@ using backend.Interfaces.MedicationInterfaces;
 using backend.Interfaces.UserInterfaces;
 using backend.Repository;
 using backend.Services.MedicationService;
+using backend.Services.Schedule;
 using backend.Services.UserService;
 using Microsoft.EntityFrameworkCore;
 var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -26,7 +27,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
-
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
 builder.Services.AddDbContextPool<ApplicationDBContext>(options => 
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -36,6 +40,8 @@ builder.Services.AddScoped<IMedicationRepository, MedicationRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMedicationService, MedicationService>();
 builder.Services.AddScoped<IMedicationScheduleRepository,MedicationScheduleRepository>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

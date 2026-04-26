@@ -12,20 +12,20 @@ namespace backend.mappers
             return new MedicationScheduleDto
             {
                 Id=medicationScheduleModel.Id,
-                User=medicationScheduleModel.User,
-                Medication=medicationScheduleModel.Medication,
+                UserId=medicationScheduleModel.UserId,
+                MedicationId=medicationScheduleModel.MedicationId,
                 NumberOfPills=medicationScheduleModel.NumberOfPills,
                 Duration=medicationScheduleModel.Duration,
                 StartDate=medicationScheduleModel.StartDate,
                 EndDate=medicationScheduleModel.EndDate
             };
         }
-            public static MedicationSchedule ToMedicationFromCreateDto(this CreateMedicationScheduleDto medicationScheduleDto)
+            public static MedicationSchedule ToMedicationFromCreateDto(this CreateMedicationScheduleDto medicationScheduleDto,DateOnly endDate)
         {
             return new MedicationSchedule
             {
-                User=medicationScheduleDto.User,
-                Medication=medicationScheduleDto.Medication,
+                UserId=medicationScheduleDto.UserId,
+                MedicationId=medicationScheduleDto.MedicationId,
                 NumberOfPills=medicationScheduleDto.NumberOfPills,
                 Duration=medicationScheduleDto.Duration,
                 StartDate=medicationScheduleDto.StartDate,

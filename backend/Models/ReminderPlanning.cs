@@ -10,8 +10,10 @@ namespace backend.Models
         public DateOnly reminderDay{get; set;}
 
         public string? dayOfWeek {get; set;}
+
+        public int? MedicationScheduleId{get;set;}
         
-        public MedicationSchedule medicationSchedule{get; set;}=new MedicationSchedule();
+        public MedicationSchedule MedicationSchedule{get; set;}=new MedicationSchedule();
 
         public List<MedicationReminder> medicationReminders{get; set;}=new List<MedicationReminder>();
 

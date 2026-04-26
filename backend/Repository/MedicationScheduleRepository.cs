@@ -1,7 +1,9 @@
 
 using backend.Data;
+using backend.Dtos.MedicationScheduleDtos;
 using backend.Interfaces;
 using backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repository
 {
@@ -21,34 +23,51 @@ namespace backend.Repository
             return medicationScheduleModel;
         }
 
-        public Task<MedicationSchedule?> DeleteMedicationScheduleAsync(int id)
+        public async Task<MedicationSchedule?> DeleteMedicationScheduleAsync(MedicationSchedule medicationScheduleModel)
         {
-            throw new NotImplementedException();
+           _context.MedicationSchedules.Remove(medicationScheduleModel);
+           await _context.SaveChangesAsync();
+           return medicationScheduleModel;
+
         }
 
-        public Task<List<MedicationSchedule>> GetAllSchedulesAsync()
+        public async Task<List<MedicationSchedule>> GetAllSchedulesAsync()
         {
-            throw new NotImplementedException();
+            return await _context.MedicationSchedules.ToListAsync();
         }
 
-        public Task<List<MedicationSchedule>> GetAllUserMedicationSchedulesAsync(User User)
+        public async Task<List<MedicationSchedule>> GetAllUserMedicationSchedulesAsync(User user)
         {
-            throw new NotImplementedException();
+            return await _context.MedicationSchedules.ToListAsync();
         }
 
-        public Task<List<MedicationSchedule>> GetAllUserMedicationsForMedicineAsync(User user, Medication medication)
+        public async Task<List<MedicationSchedule>> GetAllUserMedicationsForMedicineAsync(User user, Medication medication)
         {
-            throw new NotImplementedException();
+           var allSchedules= await _context.MedicationSchedules.ToListAsync();
+           return allSchedules.FindAll(x=>x.User==user && x.Medication==medication);
         }
 
-        public Task<MedicationSchedule> GetMedicationScheduleAsync(int id)
+        public async Task<MedicationSchedule?> GetMedicationScheduleAsync(int id)
         {
-            throw new NotImplementedException();
+           return await _context.MedicationSchedules.FindAsync(id);
         }
 
-        public Task<MedicationSchedule> UpdateMedicationScheduleAsync(int id, MedicationSchedule medicationScheduleModel)
+        public async Task<MedicationSchedule?> UpdateMedicationScheduleAsync(int id, MedicationScheduleDto updateMedicationSchedule)
         {
-            throw new NotImplementedException();
+            var scheduleExists= await _context.MedicationSchedules.FirstOrDefaultAsync(x=> x.Id==id);
+            if (scheduleExists == null)
+            {
+                return null;
+            }
+                scheduleExists.UserId=updateMedicationSchedule.UserId;
+                scheduleExists.MedicationId=updateMedicationSchedule.MedicationId;
+                scheduleExists.NumberOfPills=updateMedicationSchedule.NumberOfPills;
+                scheduleExists.Duration=updateMedicationSchedule.Duration;
+                scheduleExists.StartDate=updateMedicationSchedule.StartDate;
+                await _context.SaveChangesAsync();
+                return scheduleExists;
+
+                
         }
     }
 }

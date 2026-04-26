@@ -1,12 +1,15 @@
-using backend.Dtos.MedicationDtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using backend.Dtos.MedicationScheduleDtos;
 using backend.Models;
 
-namespace backend.Interfaces
+namespace backend.Services.Schedule
 {
-    public interface IMedicationScheduleRepository
+    public interface IScheduleService
     {
-        Task<List<MedicationSchedule>> GetAllSchedulesAsync();
+         Task<List<MedicationSchedule>> GetAllSchedulesAsync();
         Task<MedicationSchedule?> GetMedicationScheduleAsync(int id);
 
         Task<MedicationSchedule> CreateMedicationScheduleAsync(MedicationSchedule medicationScheduleModel);
@@ -20,7 +23,5 @@ namespace backend.Interfaces
         Task<List<MedicationSchedule>> GetAllUserMedicationsForMedicineAsync(User user, Medication medication);
 
         
-
-
     }
 }

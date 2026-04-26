@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Data;
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260426011914_scheduleUpdate-2")]
+    partial class scheduleUpdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,41 @@ namespace backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("backend.Dtos.MedicationScheduleDtos.MedicationScheduleDto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly?>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("MedicationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("NumberOfPills")
+                        .HasColumnType("integer");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MedicationScheduleDto");
+                });
 
             modelBuilder.Entity("backend.Models.Medication", b =>
                 {
@@ -172,6 +210,25 @@ namespace backend.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("backend.Dtos.MedicationScheduleDtos.MedicationScheduleDto", b =>
+                {
+                    b.HasOne("backend.Models.Medication", "Medication")
+                        .WithMany()
+                        .HasForeignKey("MedicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.User", "User")
+                        .WithMany("medicationSchedules")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Medication");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("backend.Models.MedicationReminder", b =>
                 {
                     b.HasOne("backend.Models.ReminderPlanning", "ReminderPlanning")
@@ -188,7 +245,7 @@ namespace backend.Migrations
                         .HasForeignKey("MedicationId");
 
                     b.HasOne("backend.Models.User", "User")
-                        .WithMany("medicationSchedules")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("Medication");

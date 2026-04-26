@@ -1,6 +1,6 @@
 
 
-using backend.Dtos.user;
+using backend.Dtos.userDtos;
 using backend.Models;
 
 namespace backend.mappers
@@ -16,7 +16,8 @@ namespace backend.mappers
                 LastName=userModel.LastName,
                 DateOfBirth=userModel.DateOfBirth,
                 Email=userModel.Email,
-                Gender=userModel.Gender
+                Gender=userModel.Gender,
+                medicationSchedules=userModel.medicationSchedules.Select(mc=>mc.ToMedicationScheduleDto()).ToList()
             };
         }
         public static User ToUserFromCreateDTO(this CreateUserRequestDto userDto)

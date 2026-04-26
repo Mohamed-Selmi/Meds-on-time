@@ -2,7 +2,7 @@
 
 
 using backend.Data;
-using backend.Dtos.user;
+using backend.Dtos.userDtos;
 using backend.Interfaces.UserInterfaces;
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
@@ -19,16 +19,18 @@ namespace backend.Repository
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include(x=>x.medicationSchedules).ToListAsync();
         }
         public async Task<User?> GetUserByIdAsync(int id)
         {
-           return await _context.Users.FindAsync(id);
+           return await _context.Users.Include(x=>x.medicationSchedules).FirstOrDefaultAsync(ms=>ms.Id==id);
 
         }
 
         public async Task<User?> UpdateUserAsync(int id, UpdateUserRequestDto updateUserDto)
         {
+
+            //I should move this logic to the service
            var userExists= await _context.Users.FirstOrDefaultAsync(x=> x.Id==id);
            //We use FirstOrDefault because it returns null if not found
            if (userExists == null)

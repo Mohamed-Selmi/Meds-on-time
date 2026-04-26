@@ -1,5 +1,7 @@
 
 
+using backend.Dtos.MedicationScheduleDtos;
+
 namespace backend.Dtos.userDtos
 {
     
@@ -15,5 +17,8 @@ namespace backend.Dtos.userDtos
          public string Email { get; set;} = string.Empty;
 
         public string? Gender { get; set;}
+
+        public List<MedicationScheduleDto> medicationSchedules{get;set;}//=new List<MedicationScheduleDto>();
+
     }
 }

@@ -1,6 +1,6 @@
 
 using backend.Data;
-using backend.Dtos.Medication;
+using backend.Dtos.MedicationDtos;
 using backend.Interfaces.MedicationInterfaces;
 using backend.mappers;
 using backend.Models;
