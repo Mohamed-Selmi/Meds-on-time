@@ -33,7 +33,7 @@ namespace backend.Repository
 
         public async Task<List<MedicationSchedule>> GetAllSchedulesAsync()
         {
-            return await _context.MedicationSchedules.ToListAsync();
+            return await _context.MedicationSchedules.Include(x=>x.ReminderPlannings).ToListAsync();
         }
 
         public async Task<List<MedicationSchedule>> GetAllUserMedicationSchedulesAsync(User user)
@@ -49,7 +49,7 @@ namespace backend.Repository
 
         public async Task<MedicationSchedule?> GetMedicationScheduleAsync(int id)
         {
-           return await _context.MedicationSchedules.FindAsync(id);
+           return await _context.MedicationSchedules.Include(x=>x.ReminderPlannings).FirstOrDefaultAsync(rp=>rp.Id==id);
         }
 
         public async Task<MedicationSchedule?> UpdateMedicationScheduleAsync(int id, MedicationScheduleDto updateMedicationSchedule)

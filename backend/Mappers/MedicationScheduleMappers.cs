@@ -1,6 +1,7 @@
 
 using backend.Dtos.MedicationDtos;
 using backend.Dtos.MedicationScheduleDtos;
+using backend.Mappers;
 using backend.Models;
 
 namespace backend.mappers
@@ -17,10 +18,11 @@ namespace backend.mappers
                 NumberOfPills=medicationScheduleModel.NumberOfPills,
                 Duration=medicationScheduleModel.Duration,
                 StartDate=medicationScheduleModel.StartDate,
-                EndDate=medicationScheduleModel.EndDate
+                EndDate=medicationScheduleModel.EndDate,
+                ReminderPlannings=medicationScheduleModel.ReminderPlannings.Select(rp=>rp.ToReminderPlanningDto()).ToList()
             };
         }
-            public static MedicationSchedule ToMedicationFromCreateDto(this CreateMedicationScheduleDto medicationScheduleDto,DateOnly endDate)
+            public static MedicationSchedule ToMedicationScheduleFromCreateDto(this CreateMedicationScheduleDto medicationScheduleDto)
         {
             return new MedicationSchedule
             {
@@ -29,7 +31,7 @@ namespace backend.mappers
                 NumberOfPills=medicationScheduleDto.NumberOfPills,
                 Duration=medicationScheduleDto.Duration,
                 StartDate=medicationScheduleDto.StartDate,
-                
+                ReminderPlannings=medicationScheduleDto.ReminderPlannings.ConvertAll(rp=>rp.ToReminderPlanningFromCreateDto()).ToList()
             
             };
         }

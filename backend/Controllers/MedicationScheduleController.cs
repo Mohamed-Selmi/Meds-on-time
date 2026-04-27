@@ -1,5 +1,6 @@
 
 
+using backend.Dtos.MedicationScheduleDtos;
 using backend.mappers;
 using backend.Models;
 using backend.Services.Schedule;
@@ -32,6 +33,15 @@ public class MedicationScheduleController: ControllerBase
                 return NotFound();
             }
             return Ok(schedule.ToMedicationScheduleDto());
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateSchedule([FromBody] CreateMedicationScheduleDto medicationScheduleDto)
+        {
+            var medicationScheduleModel=medicationScheduleDto.ToMedicationScheduleFromCreateDto();
+            await _scheduleService.CreateMedicationScheduleAsync(medicationScheduleModel);
+            return CreatedAtAction(nameof(GetScheduleById),new {id=medicationScheduleModel.Id}, medicationScheduleModel.ToMedicationScheduleDto());
+            
+
         }
 
     } 

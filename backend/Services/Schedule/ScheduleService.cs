@@ -21,8 +21,12 @@ namespace backend.Services.Schedule
         }
         public async Task<MedicationSchedule> CreateMedicationScheduleAsync(MedicationSchedule medicationScheduleModel)
         {
+            medicationScheduleModel.EndDate=medicationScheduleModel.StartDate.AddDays(medicationScheduleModel.Duration);
+            
             return await _scheduleRepository.CreateMedicationScheduleAsync(medicationScheduleModel);
+            
         }
+        
 
         public Task<MedicationSchedule?> DeleteMedicationScheduleAsync(MedicationSchedule medicationScheduleModel)
         {
