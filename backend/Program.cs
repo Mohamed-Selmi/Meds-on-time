@@ -4,6 +4,8 @@ using backend.Interfaces.MedicationInterfaces;
 using backend.Interfaces.UserInterfaces;
 using backend.Repository;
 using backend.Services.MedicationService;
+using backend.Services.Plannings;
+using backend.Services.Reminders;
 using backend.Services.Schedule;
 using backend.Services.UserService;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +43,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMedicationService, MedicationService>();
 builder.Services.AddScoped<IMedicationScheduleRepository,MedicationScheduleRepository>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
-
+builder.Services.AddScoped<IMedicationReminderRepository,MedicationReminderRepository>();
+builder.Services.AddScoped<IReminderPlanningRepository,ReminderPlanningRepository>();
+builder.Services.AddScoped<IReminderPlanningService,ReminderPlanningService>();
+builder.Services.AddScoped<IMedicationReminderService,MedicationReminderService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

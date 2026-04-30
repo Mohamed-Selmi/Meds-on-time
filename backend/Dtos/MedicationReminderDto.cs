@@ -12,4 +12,5 @@ namespace backend.Dtos
           public TimeOnly ReminderHour{get;set;}   
 
     }
+
 }

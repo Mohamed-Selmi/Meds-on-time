@@ -37,6 +37,10 @@ namespace backend.Services.UserService
         {
             return await _userRepository.GetAllUsersAsync();
         }
+         public async Task<List<User>> GetAllUsersLazy()
+        {
+            return await _userRepository.GetAllUsersLazyAsync();
+        }
 
         public async Task<User?> GetUserById(int id)
         {

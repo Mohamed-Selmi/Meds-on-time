@@ -7,6 +7,8 @@ namespace backend.Interfaces.UserInterfaces
     public interface IuserRepository
     {
         Task<List<User>> GetAllUsersAsync();
+
+         Task<List<User>> GetAllUsersLazyAsync();
         Task<User?> GetUserByIdAsync(int id);
 
         Task<User> CreateUserAsync(User userModel);

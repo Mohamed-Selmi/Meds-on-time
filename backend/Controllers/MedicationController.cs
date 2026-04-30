@@ -48,8 +48,7 @@ namespace backend.Controllers{
             return CreatedAtAction(nameof(GetMedicationById),new {id=medicationModel.Id},medicationModel.ToMedicationDto());
         }
 
-        [HttpPut]
-        [Route("id")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateMedication([FromRoute] int id, [FromBody] CreateMedicationRequestDto UpdateMedicationDto)
         {
             var medicationModel= await _medicationService.UpdateMedication(id,UpdateMedicationDto);
@@ -60,9 +59,8 @@ namespace backend.Controllers{
             return Ok(medicationModel.ToMedicationDto());
         }
 
-        [HttpDelete]
-        [Route("id")]
-
+        [HttpDelete("{id}")]
+    
         public async Task<IActionResult> DeleteMedication([FromRoute] int id)
         {
             var medicationModel=await _medicationService.DeleteMedication(id);

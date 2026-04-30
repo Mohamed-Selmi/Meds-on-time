@@ -16,7 +16,10 @@ namespace backend.Repository
         {
             _context= context;
         }
-
+     public async Task<List<User>> GetAllUsersLazyAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
         public async Task<List<User>> GetAllUsersAsync()
         {
             return await _context.Users.Include(x=>x.medicationSchedules).ToListAsync();

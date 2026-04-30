@@ -21,7 +21,17 @@ public class UserController : ControllerBase
     {
         _userService=userService;
     }
+     [HttpGet]
+    public async Task<IActionResult> GetAllUsersLazy()
+    {
+        var users= await _userService.GetAllUsersLazy();
+
+        var userDto= users.Select(u=>u.ToUserDto());
+
+        return Ok(userDto);
+    }
     [HttpGet]
+    [Route("getEager")]
     public async Task<IActionResult> GetAllUsers()
     {
         var users= await _userService.GetAllUsers();
@@ -61,8 +71,8 @@ public class UserController : ControllerBase
         return Ok(userModel.ToUserDto());
     }
 
-    [HttpDelete]
-    [Route("{id}")]
+    [HttpDelete("{id}")]
+
     public async Task<IActionResult> DeleteUser([FromRoute] int id)
     {
         var userModel= await _userService.DeleteUser(id);

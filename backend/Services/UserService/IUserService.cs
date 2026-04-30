@@ -6,6 +6,8 @@ namespace backend.Services.UserService
     public interface IUserService
     {
         
+        Task<List<User>> GetAllUsersLazy();
+
         Task<List<User>> GetAllUsers();
         Task<User?> GetUserById(int id);
 
