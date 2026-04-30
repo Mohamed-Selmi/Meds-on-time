@@ -25,7 +25,7 @@ namespace backend.Services.Schedule
             //literally high fived myself when this worked. Been stressing about how to do it for so long.
             //I think looping via the duration number and calling the Reminderplanning service is the way to go.
             //In the reminderPlanning service I'll do the same but this time using how many pills a day.
-            medicationScheduleModel.EndDate=medicationScheduleModel.StartDate.AddDays(medicationScheduleModel.Duration);
+            //medicationScheduleModel.EndDate=medicationScheduleModel.StartDate.AddDays(medicationScheduleModel.Duration);
 
             return await _scheduleRepository.CreateMedicationScheduleAsync(medicationScheduleModel);
             

@@ -12,6 +12,6 @@ namespace backend.Dtos.MedicationScheduleDtos
 
         public DateOnly StartDate{get; set;}
 
-        public List<CreateReminderPlanningDto> ReminderPlannings{get; set;}
+        public List<TimeOnly> ReminderHours{get; set;}=new();
     }
 }

@@ -24,16 +24,34 @@ namespace backend.mappers
         }
             public static MedicationSchedule ToMedicationScheduleFromCreateDto(this CreateMedicationScheduleDto medicationScheduleDto)
         {
-            return new MedicationSchedule
+            if (medicationScheduleDto.ReminderHours.Count != medicationScheduleDto.NumberOfPills)
+            {
+                throw new ArgumentException($"Reminder hours count ({medicationScheduleDto.ReminderHours}) must match number of pills ({medicationScheduleDto.NumberOfPills})");
+            }
+           var medSchedule= new MedicationSchedule
             {
                 UserId=medicationScheduleDto.UserId,
                 MedicationId=medicationScheduleDto.MedicationId,
                 NumberOfPills=medicationScheduleDto.NumberOfPills,
                 Duration=medicationScheduleDto.Duration,
                 StartDate=medicationScheduleDto.StartDate,
-                ReminderPlannings=medicationScheduleDto.ReminderPlannings.ConvertAll(rp=>rp.ToReminderPlanningFromCreateDto()).ToList()
-            
+                EndDate=medicationScheduleDto.StartDate.AddDays(medicationScheduleDto.Duration-1),
+                ReminderPlannings=new List<ReminderPlanning>()            
             };
+            for (int i=0; i < medicationScheduleDto.Duration; i++)
+            {
+                var day=medicationScheduleDto.StartDate.AddDays(i);
+                medSchedule.ReminderPlannings.Add(new ReminderPlanning
+                {
+                    reminderDay=day,
+                    dayOfWeek=day.DayOfWeek.ToString(),
+                    medicationReminders=medicationScheduleDto.ReminderHours.Select(hour=>new MedicationReminder
+                    {
+                        ReminderHour=hour
+                    }).ToList()
+                });
+            }
+            return medSchedule;
         }
     }
 
